@@ -25,3 +25,13 @@ def embed_chunks( chunks: list[ DocumentChunk ] ) -> list[ EmbeddedChunk ]:
         )
         for chunk, vector in zip( chunks, result.embeddings )
     ]
+
+def embed_query( query: str ) -> list[ float ]:
+    """Embed a single query string for comparison against indexed document chunks."""
+    result = _client.embed(
+        [ query ],
+        model = settings.VOYAGE_MODEL,
+        input_type = "query"
+    )
+
+    return result.embeddings[ 0 ]
