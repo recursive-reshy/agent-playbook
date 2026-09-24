@@ -76,7 +76,7 @@ def make_search_tool( indexed_chunks: list[ EmbeddedChunk ] ):
         results = search( query, indexed_chunks, top_k = 3 )
 
         return "\n\n".join(
-            f"[ { chunk.score }, chunk { chunk.chunk_index }, relevance = { score:.2f } ]"
+            f"[ {chunk.source}, chunk {chunk.chunk_index}, relevance = {score:.2f} ]"
             for chunk, score in results
         )
 
