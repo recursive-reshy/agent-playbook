@@ -1,7 +1,7 @@
 from prompt_chaining.llm import complete_structured, complete_text
 from prompt_chaining.models import Outline
 
-def generate_outline( topic: str ) -> Outline:
+def generate_outline( topic: str, feedback: list[ str ] | None = None ) -> Outline:
     system = (
         "You are an experienced blog editor. You plan clear, "
         "well-structured blog posts for a general technical audience."
@@ -15,6 +15,14 @@ def generate_outline( topic: str ) -> Outline:
         "- Each section has 2-4 key points\n"
         "- Sections should flow logically from introduction to conclusion"
     )
+
+    if feedback:
+        issues = "\n".join( f"- {issue}" for issue in feedback )
+
+        prompt += (
+            "\n\nYour previous outline was rejected for these reasons:\n"
+            f"{issues}\n\nFix all of these issues."
+        )
 
     return complete_structured( prompt, system, Outline )
 
@@ -41,7 +49,7 @@ def write_draft( topic: str, outline: Outline ) -> str:
         "Output only the blog post in markdown."
     )
 
-    return complete_structured( prompt, system )
+    return complete_text( prompt, system )
 
 def polish( draft: str ) -> str:
     system = (
@@ -58,4 +66,4 @@ def polish( draft: str ) -> str:
         "Output only the edited post in markdown."
     )
 
-    return complete_structured( prompt, system )
+    return complete_text( prompt, system )
