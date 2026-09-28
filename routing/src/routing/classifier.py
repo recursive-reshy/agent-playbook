@@ -1,9 +1,8 @@
 import anthropic
 
+from routing.client import client
 from routing.config import settings
 from routing.models import RouteDecision
-
-client = anthropic.Anthropic( api_key = settings.anthropic_api_key )
 
 ROUTE_TOOL = {
     "name": "route_ticket",
