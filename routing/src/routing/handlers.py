@@ -40,10 +40,12 @@ def pick_model( complexity: Complexity ) -> str:
         return settings.complex_model
     return settings.simple_model
 
-def handle( ticket: str, decision: RouteDecision ) -> str:
+def handle( ticket: str, decision: RouteDecision, model: str ) -> str:
     response = client.messages.create(
-        model = pick_model( decision.complexity ),
+        model = model,
         max_tokens = 1024,
         system = f"{BASE_PROMPT}\n\n{HANDLER_PROMPTS[decision.category]}",
         messages = [ { "role": "user", "content": f"<ticket>\n{ticket}\n</ticket>" } ]
     )
+
+    return next( block.text for block in response.content if block.type == "text" )
