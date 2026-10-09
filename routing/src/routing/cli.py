@@ -1,7 +1,9 @@
 import argparse
 import sys
+from pathlib import Path
 
 from routing.router import Outcome, RouteResult, route
+from routing.evals import run_eval
 
 def format_result( result: RouteResult ) -> str:
     lines: list[ str ] = []
@@ -25,10 +27,19 @@ def main() -> None:
         prog = "routing",
         description = "Classify a support ticket and route it to the right handler."
     )
+    sub = parser.add_subparsers( dest = "command", required = True )
 
-    parser.add_argument( "ticket", nargs="?", help="Ticket text. Read from stdin if omitted." )
-    parser.add_argument( "--json", action="store_true", help="Print the full RouteResult as JSON." )
+    route_p = sub.add_parser( "route", help = "Route a single ticket.")
+    route_p.add_argument( "ticket", nargs = "?", help = "Ticket text. Read from stdin if omitted." )
+    route_p.add_argument( "--json", action = "store_true", help = "Print the full RouteResult as JSON." )
+
+    eval_p = sub.add_parser( "eval", help = "Score the classifier against labelled tickets." )
+    eval_p.add_argument( "path", nargs = "?", type = Path, default = Path( "evals/tickets.jsonl" ) )
+
     args = parser.parse_args()
+
+    if args.command == "eval":
+        sys.exit( run_eval( args.path ) )
 
     ticket = ( args.ticket if args.ticket is not None else sys.stdin.read() ).strip()
 

@@ -1,0 +1,15 @@
+{"ticket": "I was charged twice for my Pro subscription this month.", "category": "billing", "complexity": "simple"}
+{"ticket": "How much does the Pro plan cost per year?", "category": "billing", "complexity": "simple"}
+{"ticket": "I downgraded from Pro to Free mid-cycle, upgraded again a week later, and now I have three charges and one credit I don't understand. What do I actually owe?", "category": "billing", "complexity": "complex"}
+{"ticket": "Images in my notes stopped showing up after today's update. Is something down?", "category": "technical", "complexity": "simple"}
+{"ticket": "The app crashes when I paste an image into a note on Safari. Using macOS 15.", "category": "technical", "complexity": "complex"}
+{"ticket": "Our Zapier integration stopped creating notes last week. The webhooks return 200 but nothing appears, and only for notes with attachments.", "category": "technical", "complexity": "complex"}
+{"ticket": "How do I change the email address on my account?", "category": "account", "complexity": "simple"}
+{"ticket": "The password reset email never arrives.", "category": "account", "complexity": "simple"}
+{"ticket": "I want to delete my personal account but keep the notes I shared to my company workspace. Is that possible, and what happens to my collaborators?", "category": "account", "complexity": "complex"}
+{"ticket": "Would love a dark mode!", "category": "general", "complexity": "simple"}
+{"ticket": "Do you have an Android app?", "category": "general", "complexity": "simple"}
+{"ticket": "We're evaluating Inkwell for a 40-person team. How does it handle permissions, bulk export, and offline use?", "category": "general", "complexity": "complex"}
+{"ticket": "hi", "category": "general", "complexity": "simple", "ambiguous": true}
+{"ticket": "I can't log in, I think because my card payment failed.", "category": "account", "complexity": "simple", "ambiguous": true}
+{"ticket": "Something's wrong with my account.", "category": "account", "complexity": "simple", "ambiguous": true}

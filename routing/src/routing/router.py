@@ -29,7 +29,7 @@ def route( ticket: str ) -> RouteResult:
             review_reason = f"Classifier output failed validation ({execption.error_count()} errors)"
         )
 
-    if decision.confidence < settings.confidence_threshold:
+    if not is_confident(decision):
         return RouteResult(
             ticket = ticket,
             outcome = Outcome.HUMAN_REVIEWED,
@@ -50,3 +50,6 @@ def route( ticket: str ) -> RouteResult:
         model = model,
         reply = reply
     )
+
+def is_confident( decision: RouteDecision ) -> bool:
+    return decision.confidence >= settings.confidence_threshold
