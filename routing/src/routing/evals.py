@@ -11,7 +11,14 @@ class LabelledTicket( BaseModel ):
     complexity: Complexity
     ambiguous: bool = False
 
-def load_cases( path: Path ) -> int:
+def load_cases( path: Path ) -> list[ LabelledTicket ]:
+    with path.open() as file:
+        return [
+            LabelledTicket.model_validate_json( line )
+            for line in file if line.strip()
+        ]
+
+def run_eval( path: Path ) -> int:
     cases = load_cases( path )
     category_hits = complexity_hits = 0
     caught_ambiguous = unneeded_reviews = 0
@@ -35,7 +42,7 @@ def load_cases( path: Path ) -> int:
             unneeded_reviews += 1
         elif not cat_ok:
             got = decision.category if decision else "invalid"
-            misroutes.append( f"expected {case.category}, got {got}: {case.ticket}" )            
+            misroutes.append( f"expected {case.category}, got {got}: {case.ticket}" )
 
         got_label = (
             f"{decision.category}/{decision.complexity} @ {decision.confidence:.2f}"
@@ -48,18 +55,18 @@ def load_cases( path: Path ) -> int:
             f"{'R' if reviewed else ' '}  {got_label:<28} {case.ticket[:60]}"
         )
 
-        total = len( cases )
-        ambiguous_total = sum( case.ambiguous for case in cases )
-        clear_total = total - ambiguous_total
+    total = len( cases )
+    ambiguous_total = sum( case.ambiguous for case in cases )
+    clear_total = total - ambiguous_total
 
-        print()
-        print(f"Category accuracy:     {category_hits}/{total}")
-        print(f"Complexity accuracy:   {complexity_hits}/{total}")
-        print(f"Ambiguous -> review:   {caught_ambiguous}/{ambiguous_total}")
-        print(f"Clear -> review:       {unneeded_reviews}/{clear_total}  (needless human work)")
-        print(f"Confident misroutes:   {len(misroutes)}")
+    print()
+    print(f"Category accuracy:     {category_hits}/{total}")
+    print(f"Complexity accuracy:   {complexity_hits}/{total}")
+    print(f"Ambiguous -> review:   {caught_ambiguous}/{ambiguous_total}")
+    print(f"Clear -> review:       {unneeded_reviews}/{clear_total}  (needless human work)")
+    print(f"Confident misroutes:   {len(misroutes)}")
 
-        for misroute in misroutes:
-            print( f"f -{misroute}" )
+    for misroute in misroutes:
+        print(f" - {misroute}")
 
-        return 1 if misroutes else 0
+    return 1 if misroutes else 0
