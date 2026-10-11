@@ -14,7 +14,7 @@ The article distinguishes **workflows** (predefined code paths orchestrating LLM
 |---|---|---|---|
 | 0 | [augmented-llm](augmented-llm) | The base building block: an LLM enhanced with retrieval, tools, and memory. | ✅ Done |
 | 1 | [prompt-chaining](prompt-chaining) | Decompose a task into a fixed sequence of LLM calls, each processing the previous step's output. | ✅ Done |
-| 2 | routing | Classify an input and direct it to a specialized downstream prompt or flow. | 🔜 Planned |
+| 2 | routing | Classify an input and direct it to a specialized downstream prompt or flow. | ✅ Done |
 | 3 | parallelization | Run independent subtasks concurrently (sectioning) or the same task multiple times for consensus (voting). | 🔜 Planned |
 | 4 | orchestrator-workers | A central LLM dynamically breaks a task into subtasks and delegates them to worker LLMs. | 🔜 Planned |
 | 5 | evaluator-optimizer | One LLM generates a response while another evaluates and critiques it in a feedback loop. | 🔜 Planned |
