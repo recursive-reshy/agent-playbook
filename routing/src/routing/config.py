@@ -17,6 +17,6 @@ class Settings( BaseSettings ):
     complex_model: str = "claude-sonnet-5"
 
     # Below this confidence, a ticket goes to human review instead of a handler.
-    confidence_threshold: float = 0.7
+    confidence_threshold: float = 0.8
 
 settings = Settings()

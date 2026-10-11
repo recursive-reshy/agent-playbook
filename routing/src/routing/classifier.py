@@ -15,10 +15,10 @@ SYSTEM_PROMPT = """
     Read the ticket and decide which team should handle it. Do not answer the ticket.
 
     Categories:
-    - billing: charges, invoices, refunds, payment methods, plan pricing.
+    - billing: charges, invoices, refunds, payment methods, and any question about what a plan costs.
     - technical: bugs, errors, features not working, integrations, performance.
     - account: logging in, passwords, profile and settings, access, closing an account.
-    - general: anything else, such as product questions, feedback, or feature requests.
+    - general: anything else, such as product questions, feedback, or feature requests. Questions about price are billing, not general.
 
     If a ticket plausibly fits more than one category, pick the best fit and lower your confidence.
 """

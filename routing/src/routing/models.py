@@ -18,8 +18,9 @@ class RouteDecision( BaseModel ):
     )
     category: Category
     complexity: Complexity = Field(
-        description="simple: answerable from general knowledge in a short reply. "
-        "complex: multi-part, ambiguous, or needs careful step-by-step help."
+        description="simple: a short, direct reply fully resolves it. "
+        "complex: needs troubleshooting or investigation, asks several things at once, "
+        "or describes a multi-step situation."
     )
     confidence: float = Field(
         ge=0.0,
