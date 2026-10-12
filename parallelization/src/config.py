@@ -31,6 +31,10 @@ class Settings( BaseSettings ):
             raise ValueError(
                 f"vote_threshold ({self.vote_threshold}) can't exceed "
                 f"vote_count ({self.vote_count})"
-            ) 
+            )
 
-settings = Settings()
+        return self
+    
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()
