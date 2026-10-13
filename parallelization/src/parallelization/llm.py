@@ -17,6 +17,7 @@ class LLM:
             api_key = self.settings.anthropic_api_key.get_secret_value(),
             max_retries = self.settings.max_retries
         )
+        # Caps in-flight API calls at max_concurrency; extra calls wait their turn.
         self.semaphore =asyncio.Semaphore( self.settings.max_concurrency )
 
     async def structured(
