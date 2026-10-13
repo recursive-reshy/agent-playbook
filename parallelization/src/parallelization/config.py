@@ -10,11 +10,11 @@ class Settings( BaseSettings ):
         extra = "ignore"
     )
 
-    anthropic_key: SecretStr
+    anthropic_api_key: SecretStr
 
     # Models
     reviewer_model: str = "claude-sonnet-5-5"
-    voter_model: str = ""
+    voter_model: str = "claude-haiku-5-5"
     max_tokens: int = Field( default = 2048, gt = 0 )
 
     # Concurrency
