@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field, computed_field, model_validator
 class Aspect( StrEnum ):
     SECURITY = "security"
     PERFORMANCE = "performance"
-    ReLIABILITY = "reliability"
+    READABILITY = "readability"
 
 class Severity( StrEnum ):
     CRITICAL = "critical"
