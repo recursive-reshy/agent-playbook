@@ -41,7 +41,7 @@ class LLM:
                 system = system,
                 messages = [ { "role": "user", "content": user } ],
                 tools = [ tool ],
-                tool_choice = { "type": "tool", "name": TOOL_NAME }
+                tool_choice = { "type": "auto"}
             )
 
         if response.stop_reason == "max_tokens":
