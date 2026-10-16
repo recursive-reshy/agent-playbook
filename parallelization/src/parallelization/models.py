@@ -89,3 +89,8 @@ class ReviewReport( BaseModel ):
     findings: list[ ReportFinding ]
     sections: list[ SectionReview ]
     vote: VoteResult
+
+class RunResult( BaseModel ):
+    reviews: list[ SectionReview ]
+    vote: VoteResult
+    seconds: float
