@@ -51,3 +51,28 @@ async def run_vote( llm: LLM, code: str ) -> VoteResult:
         failed = len( results ) - len( votes ),
         threshold = llm.settings.vote_threshold
     )
+
+async def run_vote( llm: LLM, code: str, *, sequential: bool = False ) -> VoteResult:
+    count = llm.settings.vote_count
+    prompts = list( islice( cycle( VOTER_PROMPTS ), count ) )
+
+    if sequential:
+        results: list[ SecurityVote | BaseException ] = []
+        for prompt in prompts:
+            try:
+                results.append( await cast_vote( llm, prompt, code ) )
+            except Exception as exception:
+                results.append( exception )
+
+    else:
+        results = await asyncio.gather(
+            *( cast_vote( llm, prompt, code ) for prompt in prompts ),
+            return_exceptions = True
+        )
+
+    votes = [ result for result in results if isinstance( result, SecurityVote ) ]
+    return VoteResult(
+        votes = votes,
+        failed = len( results ) - len( votes ),
+        threshold = llm.settings.vote_threshold
+    )
