@@ -7,6 +7,7 @@ from parallelization.llm import LLM
 from parallelization.models import ReviewReport
 from parallelization.report import build_report, format_report
 from parallelization.runner import run_all
+from parallelization.evaluate import evaluate
 
 def read_code( path: str | None ) -> tuple[ str, str ]:
     if path:
@@ -30,11 +31,13 @@ def main() -> None:
         description = "Review code with parallel LLM calls"
     )
     sub = parser.add_subparsers( dest = "command", required = True )
-
+    
     review_cmd = sub.add_parser( "review", help = "Review a file, or code piped in on stdin." )
     review_cmd.add_argument( "file", nargs = "?", help = "Path to the code. Reads stdin if omitted." )
     review_cmd.add_argument( "--sequential", action = "store_true", help = "Run all calls one at a time." )
     review_cmd.add_argument( "--json", action = "store_true", help = "Print the full report as JSON." )
+    
+    sub.add_parser( "eval", help="Score the security vote on the labelled snippets." )
 
     args = parser.parse_args()
 
@@ -47,3 +50,5 @@ def main() -> None:
         print(
             report.model_dump_json( indent = 2 ) if args.json else format_report( report )
         )
+    elif args.command == "eval":
+        print( asyncio.run( evaluate() ) )
